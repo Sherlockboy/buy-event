@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+
 class HomeController extends Controller
 {
     public function index()
@@ -11,6 +13,8 @@ class HomeController extends Controller
     
     public function products()
     {
-        return view('frontend.pages.products');
+        $products = Product::all('id', 'title', 'description', 'price', 'image');
+
+        return view('frontend.pages.products', compact('products'));
     }
 }

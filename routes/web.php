@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/products', [HomeController::class, 'products'])->name('products');
 
+Route::get('/buy/{id}', [UserController::class, 'buy'])->name('buy')->middleware('auth');
+
 Route::group(['namespace' => 'Auth'], function(){
     Route::middleware('guest')->group(function() {
         Route::get('/login', [LoginController::class, 'show'])->name('login');
