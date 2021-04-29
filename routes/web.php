@@ -22,7 +22,7 @@ Route::get('/products', [HomeController::class, 'products'])->name('products');
 
 Route::middleware('auth')->group(function() {
     Route::get('/buy/{id}', [UserController::class, 'buy'])->name('buy');
-    Route::get('/{slug}', [UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/profile/{slug}', [UserController::class, 'dashboard'])->name('user.dashboard');
 });
 
 Route::group(['namespace' => 'Auth'], function(){
