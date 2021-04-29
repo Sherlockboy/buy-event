@@ -22,10 +22,10 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             if(auth()->user()->admin()){
-                return redirect()->intended('admin.dashboard');
+                return redirect()->intended('admin/dashboard');
             }
             
-            return redirect()->intended('user.dashboard');
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([
