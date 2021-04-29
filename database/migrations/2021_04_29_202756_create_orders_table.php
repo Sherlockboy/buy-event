@@ -18,6 +18,8 @@ class CreateOrdersTable extends Migration
             
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
+
+            $table->integer('status')->default(1);
             
             $table->timestamps();
         });
