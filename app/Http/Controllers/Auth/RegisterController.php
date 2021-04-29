@@ -8,7 +8,13 @@ use App\Models\User;
 
 class RegisterController extends Controller
 {
-    public function register(RegisterRequest $request){
+    public function show()
+    {
+        return view('auth.register');
+    }
+    
+    public function register(RegisterRequest $request)
+    {    
         $data = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
