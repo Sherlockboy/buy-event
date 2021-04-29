@@ -26,4 +26,9 @@ class Order extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function getCreatedAtAttribute()
+    {
+        return date('m/d/Y', strtotime($this->attributes['created_at']));
+    }
 }

@@ -26,4 +26,12 @@ class UserController extends Controller
 
         return back()->with('success', 'Order successfully made!');
     }
+
+    public function dashboard($slug)
+    {
+        return view('frontend.pages.dashboard')->with([
+            'orders' => Order::with('product')->latest()->get(),
+            'user' => auth()->user()
+        ]);
+    }
 }

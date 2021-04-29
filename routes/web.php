@@ -20,7 +20,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('index');
 Route::get('/products', [HomeController::class, 'products'])->name('products');
 
-Route::get('/buy/{id}', [UserController::class, 'buy'])->name('buy')->middleware('auth');
+Route::middleware('auth')->group(function() {
+    Route::get('/buy/{id}', [UserController::class, 'buy'])->name('buy');
+    Route::get('/{slug}', [UserController::class, 'dashboard'])->name('user.dashboard');
+});
 
 Route::group(['namespace' => 'Auth'], function(){
     Route::middleware('guest')->group(function() {
