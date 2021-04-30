@@ -35,11 +35,19 @@ class AdminController extends Controller
             return back()->with('error', 'Could not send SMS, please try again!');
         }
 
+        $this->accept($order);
+        
         return back()->with('success', 'Accepted, SMS send successfully!');
     }
 
     public function mail($id)
     {
         dd($id);
+    }
+
+    protected function accept(Order $order)
+    {
+        $order->status = 0;
+        $order->save();
     }
 }
