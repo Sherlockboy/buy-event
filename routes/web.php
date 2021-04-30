@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
@@ -22,7 +23,14 @@ Route::get('/products', [HomeController::class, 'products'])->name('products');
 
 Route::middleware('auth')->group(function() {
     Route::get('/buy/{id}', [UserController::class, 'buy'])->name('buy');
-    Route::get('/profile/{slug}', [UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+    
+    Route::middleware('admin')->group(function() {
+        Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::get('/admin/notify-user/sms/{id}', [AdminController::class, 'sms'])->name('admin.users.notify.sms');
+        Route::get('/admin/notify-user/mail/{id}', [AdminController::class, 'mail'])->name('admin.users.notify.mail');
+    });
 });
 
 Route::group(['namespace' => 'Auth'], function(){
