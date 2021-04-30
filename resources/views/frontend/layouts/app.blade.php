@@ -53,9 +53,15 @@
                                 <ul class="absolute right-0 z-20 w-48 py-2 mt-5 bg-white rounded-md shadow-xl dark:bg-gray-800"
                                     x-show="open"
                                     @click.away="open = false">
-                                    <a href="{{ route('user.dashboard', [auth()->user()->slug]) }}" class="text-center block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white">
-                                        {{ auth()->user()->name }}
-                                    </a>
+                                    @if (auth()->user()->admin())
+                                        <a href="{{ route('admin.dashboard') }}" class="text-center block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white">
+                                            {{ auth()->user()->name }}
+                                        </a>
+                                    @else
+                                        <a href="{{ route('user.dashboard') }}" class="text-center block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white">
+                                            {{ auth()->user()->name }}
+                                        </a>
+                                    @endif
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
                                         <button href="submit" class="w-full block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white">

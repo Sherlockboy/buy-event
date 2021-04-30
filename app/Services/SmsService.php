@@ -2,91 +2,61 @@
 
 namespace App\Services;
 
-use ClickSend\Api\SMSApi as SMSApi;
-use ClickSend\Configuration as Configuration;
-use ClickSend\Model\SmsMessage;
-use ClickSend\Model\SmsMessageCollection;
-use Exception;
 use GuzzleHttp\Client as Client;
-use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Psr7\Request;
 
 class SmsService
 {
-    private const USERNAME = "kabilovhurshid5@gmail.com";
-    private const API_KEY = "43935549-15E6-D22D-6454-B97C65D3CE09";
-
-    private $api;
+    private $username;
+    private $api_key;
+    private $url_endpoint;
 
     public function __construct()
     {
-        $this->api = new SMSApi(
-            new Client(),
-            Configuration::getDefaultConfiguration()
-                ->setUsername(env('USERNAME', self::USERNAME))
-                ->setPassword(env('CLICK_SEND_API_KEY', self::API_KEY))
-        );
+        $this->username = env('', 'kabilovhurshid5@gmail.com');
+        $this->api_key = env('', '43935549-15E6-D22D-6454-B97C65D3CE09');
+        $this->url_endpoint = env('', 'https://rest.clicksend.com/v3/sms/send');
     }
 
-    protected function prepareSMS($body, $to)
+    protected function getBasicAuth()
     {
-        $msg = new SmsMessage();
-        $msg->setBody($body)
-            ->setTo($to)
-            ->setSource("sdk");
-
-        $sms_messages = new SmsMessageCollection(); 
-        $sms_messages->setMessages([$msg]);
-
-        return $sms_messages;
+        return 'Basic ' . base64_encode($this->username . ':' . $this->api_key);
     }
 
-    protected function prepareSMSCollection($messages)
+    protected function getSMSHeader()
     {
-        $sms_messages = new SmsMessageCollection();
-        $template = new SmsMessage();
-        foreach ($messages as $message) {
-            $template->setBody($message['body'])
-                ->setTo($message['to'])
-                ->setSource("sdk");
-            $sms_messages->setMessages([$template]);
-        }
-
-        return $sms_messages;
-    }
-
-    public function sendSMS($body, $to) : int
-    {
-        try {
-            $result = $this->api->smsSendPost(
-                $this->prepareSMS($body, $to)
-            );
-            
-            Log::info($result);
-            
-        } catch (Exception $e) {
-            Log::alert("Exception while sending sms. " . $e->getMessage());
-            
-            return 500;
-        }
-
-        return 200;
+        return [
+            'Content-type' => 'application/json',
+            'Authorization' => $this->getBasicAuth()
+        ];
     }
     
-    public function sendSMSCollection($messages)
+    protected function getSMSBody($text, $to)
     {
-        try {
-            $result = $this->api->smsSendPost(
-                $this->prepareSMSCollection($messages)
-            );
-            
-            Log::info($result);
-            
-        } catch (Exception $e) {
-            Log::alert("Exception while sending sms. " . $e->getMessage());
-            
-            return 500;
-        }
+        return json_encode([
+            'messages' => [
+                [
+                    'source' => 'php',
+                    'from' => 'sendmobile',
+                    'body' => $text,
+                    'to' => $to,
+                    'custom_string' => 'This is a test!'
+                ]
+            ]
+        ]);
+    }
 
-        return 200;
+    public function send($text, $to)
+    {
+        $request = new Request(
+            'POST',
+            $this->url_endpoint,
+            $this->getSMSHeader(),
+            $this->getSMSBody($text, $to)
+        );
+        
+        $response = (new Client)->send($request);
+
+        return $response->getStatusCode();
     }
 }

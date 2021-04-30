@@ -27,10 +27,10 @@ class AdminController extends Controller
     {
         $order = Order::whereId($id)->with('user', 'product')->firstOrFail();
         
-        $message_body = 'Your purchase to ' . $order->product->title . ' is accepted.';
+        $message = 'Your purchase to ' . $order->product->title . ' is accepted.';
         
-        $response = $service->sendSMS($message_body, $order->user->phone);
-
+        $response = $service->send($message, $order->user->phone);
+        
         if($response !== 200){
             return back()->withErrors('message', 'Could not send SMS, please try again!');
         }
