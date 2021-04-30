@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function() {
         Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
         Route::get('/admin/notify-user/sms/{id}', [AdminController::class, 'sms'])->name('admin.users.notify.sms');
-        Route::get('/admin/notify-user/mail/{id}', [AdminController::class, 'mail'])->name('admin.users.notify.mail');
+        Route::get('/admin/notify-user/email/{id}', [AdminController::class, 'mail'])->name('admin.users.notify.email');
     });
 });
 

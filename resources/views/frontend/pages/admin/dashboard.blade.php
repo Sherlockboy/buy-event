@@ -116,7 +116,7 @@
                                                     <a href="{{ route('admin.users.notify.sms', [$order->id]) }}" class="block px-4 py-2 text-sm text-gray-800 border-b dark:text-gray-200 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600">
                                                         Notify by SMS
                                                     </a>
-                                                    <a href="{{ route('admin.users.notify.sms', [$order->id]) }}" class="block px-4 py-2 text-sm text-gray-800 border-b dark:text-gray-200 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600">
+                                                    <a href="{{ route('admin.users.notify.email', [$order->id]) }}" class="block px-4 py-2 text-sm text-gray-800 border-b dark:text-gray-200 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600">
                                                         Notify by Mail
                                                     </a>
                                                 </ul>
