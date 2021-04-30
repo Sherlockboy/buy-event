@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
 use App\Services\SmsService;
+use Exception;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -29,9 +32,11 @@ class AdminController extends Controller
         
         $message = 'Your purchase to ' . $order->product->title . ' is accepted.';
         
-        $response = $service->send($message, $order->user->phone);
-        
-        if($response !== 200){
+        try {
+            $response = $service->send($message, $order->user->phone);
+        } catch (Exception $e) {
+            Log::alert($e->getMessage());
+
             return back()->with('error', 'Could not send SMS, please try again!');
         }
 

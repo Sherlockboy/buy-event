@@ -4,6 +4,7 @@ namespace App\Services;
 
 use GuzzleHttp\Client as Client;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Log;
 
 class SmsService
 {
@@ -13,9 +14,9 @@ class SmsService
 
     public function __construct()
     {
-        $this->username = env('', 'kabilovhurshid5@gmail.com');
-        $this->api_key = env('', '43935549-15E6-D22D-6454-B97C65D3CE09');
-        $this->url_endpoint = env('', 'https://rest.clicksend.com/v3/sms/send');
+        $this->username = env('CLICK_SEND_USERNAME');
+        $this->api_key = env('CLICK_SEND_API_KEY');
+        $this->url_endpoint = env('CLICK_SEND_ENDPOINT');
     }
 
     protected function getBasicAuth()
