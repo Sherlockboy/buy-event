@@ -57,6 +57,9 @@
                                         <a href="{{ route('admin.dashboard') }}" class="text-center block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white">
                                             {{ auth()->user()->name }}
                                         </a>
+                                        <a href="{{ route('admin.users') }}" class="text-center block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white">
+                                            Users
+                                        </a>
                                     @else
                                         <a href="{{ route('user.dashboard') }}" class="text-center block px-4 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white">
                                             {{ auth()->user()->name }}

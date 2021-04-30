@@ -58,4 +58,9 @@ class User extends Authenticatable
     {
         return Str::of($this->attributes['name'])->slug('-');
     }
+
+    public function getCreatedAtAttribute()
+    {
+        return date('m/d/Y', strtotime($this->attributes['created_at']));
+    }
 }
