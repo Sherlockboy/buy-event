@@ -32,7 +32,7 @@ class AdminController extends Controller
         $response = $service->send($message, $order->user->phone);
         
         if($response !== 200){
-            return back()->withErrors('message', 'Could not send SMS, please try again!');
+            return back()->with('error', 'Could not send SMS, please try again!');
         }
 
         return back()->with('success', 'Accepted, SMS send successfully!');

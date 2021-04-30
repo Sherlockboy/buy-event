@@ -77,6 +77,30 @@
         </div>
     </nav>
     @yield('content')
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        @if(session()->has('error'))
+            document.addEventListener("DOMContentLoaded", function(event) {
+                swal({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "{{ session()->get('error') }}"
+                });
+            });
+        @endif
+
+        @if(session()->has('success'))
+            document.addEventListener("DOMContentLoaded", function(event) {
+                swal({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: "{{ session()->get('success') }}"
+                });
+            });
+        @endif
+    </script>
+
     @yield('script')
 </body>
 </html>

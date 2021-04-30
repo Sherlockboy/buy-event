@@ -21,7 +21,7 @@ class UserController extends Controller
         } catch (Exception $e) {
             Log::alert($e->getMessage());
 
-            return back()->withErrors('message', 'Something went wrong while making order!');
+            return back()->with('error', 'Something went wrong while making order!');
         }
 
         return back()->with('success', 'Order successfully made!');
