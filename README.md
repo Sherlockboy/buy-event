@@ -85,3 +85,19 @@ MAIL_FROM_ADDRESS=your_google_account
 MAIL_FROM_NAME="${APP_NAME}"
 ```
 Basically, that's it. If you have problems with sending email over your google account please read [this answer](https://stackoverflow.com/questions/42558903/expected-response-code-250-but-got-code-535-with-message-535-5-7-8-username) on stackoverflow.
+
+## Console Command to send confirmation message
+You have two options to send notification, whether by SMS or by Mail
+```bash
+php artisan send:confirmation {user_id} --m --s
+```
+Instead of user_id you should enter the id of user you want to send notification. --m option is for Mail channel and --s is SMS channel.
+
+If you want to send it over one single channel, you can choose one of them optionally:
+```bash
+php artisan send:confirmation {user_id} --m
+```
+or
+```bash
+php artisan send:confirmation {user_id} --s
+```
