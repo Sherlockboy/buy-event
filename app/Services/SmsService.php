@@ -4,7 +4,6 @@ namespace App\Services;
 
 use GuzzleHttp\Client as Client;
 use GuzzleHttp\Psr7\Request;
-use Illuminate\Support\Facades\Log;
 
 class SmsService
 {
