@@ -11,7 +11,7 @@ class Notification extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['type', 'user_id'];
+    protected $fillable = ['user_id', 'is_mail', 'is_sms'];
 
     public function user(): BelongsTo
     {
